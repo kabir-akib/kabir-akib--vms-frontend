@@ -1,17 +1,54 @@
-# vms_frontend
+# Stark Group Vehicle Management System (VMS) — Frontend
 
-A new Flutter project.
+## Project Overview
+The Stark Group Vehicle Management System (VMS) is a Flutter Web application designed to manage company vehicles. It provides an interface for viewing, registering, updating, and deleting vehicle records.
 
-## Getting Started
+## Features
+- User Login and Authentication
+- View Vehicle List
+- Register New Vehicles
+- Edit Vehicle Information
+- Delete Vehicles
+- Backend API Integration
+- Loading and Error Handling
+- Duplicate Vehicle Number Validation
 
-This project is a starting point for a Flutter application.
+## Technology Stack
+- Flutter
+- Dart
+- REST API
 
-A few resources to get you started if this is your first Flutter project:
+## Backend Integration
+The frontend communicates with a separate Java Spring Boot backend through REST APIs. Vehicle information is retrieved from and stored in a MySQL database through the backend.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Run Locally
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Prerequisites
+- Flutter SDK
+- Dart SDK
+- Google Chrome
+
+### Setup
+1. Clone this repository.
+2. Open the project folder in a terminal.
+3. Install dependencies:
+
+```bash
+flutter pub get
+```
+
+4. Run the application:
+
+```bash
+flutter run -d chrome
+```
+
+## Project Structure
+The project follows a feature-based Flutter structure, separating application configuration, models, services, routing, themes, and UI
+## Related Repository
+
+Backend: https://github.com/kabir-akib/vms-backend
+
+---
+
+Developed as part of the Stark Group Vehicle Management System project.
