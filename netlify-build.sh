@@ -1,3 +1,4 @@
+
 #!/bin/bash
 set -e
 
@@ -16,4 +17,6 @@ export PATH="$HOME/flutter/bin:$PATH"
 flutter --version
 flutter config --enable-web
 flutter pub get
-flutter build web --release
+
+flutter build web --release \
+  --dart-define=API_BASE_URL=https://kabir-akib-vms-backend.onrender.com
