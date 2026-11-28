@@ -219,8 +219,8 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
 
   Widget _buildRoleBadge(String role) {
     final isAdmin = role.toUpperCase() == 'ADMIN';
-    final bg = isAdmin ? AppColors.secondaryAccent.withValues(alpha: 0.15) : AppColors.surfaceVariant;
-    final text = isAdmin ? AppColors.secondaryAccent : AppColors.textSecondary;
+    final bg = isAdmin ? AppColors.primaryAction.withValues(alpha: 0.12) : AppColors.surfaceVariant;
+    final text = isAdmin ? AppColors.primaryAction : AppColors.textSecondary;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(12), border: Border.all(color: text.withValues(alpha: 0.25))),

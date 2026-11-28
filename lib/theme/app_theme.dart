@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
-/// Comprehensive Material 3 dark/premium automotive theme tailored to Stark Group's
-/// Graphite & Emerald/Automotive aesthetic.
+/// Comprehensive Material 3 theme tailored to Stark Group's
+/// Professional Automotive + Hybrid Layered design system.
+///
+/// Features:
+/// - Deep Navy (#172633) sidebar & dark accent panels
+/// - Clean Off-White (#F3F6F8) main workspace
+/// - Pure White (#FFFFFF) elevated layered cards with subtle restrained depth
+/// - Automotive Teal (#168C91) primary actions
 class AppTheme {
   static ThemeData get lightTheme {
     const colorScheme = ColorScheme(
-      brightness: Brightness.dark,
+      brightness: Brightness.light,
       primary: AppColors.primaryAction,
       onPrimary: Colors.white,
-      secondary: AppColors.secondaryAccent,
+      secondary: AppColors.deepNavy,
       onSecondary: Colors.white,
       surface: AppColors.surface,
       onSurface: AppColors.textPrimary,
@@ -21,12 +27,12 @@ class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.dark,
+      brightness: Brightness.light,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: AppColors.background,
-      canvasColor: AppColors.surface,
+      canvasColor: AppColors.background,
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.surface,
+        backgroundColor: Colors.white,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
         centerTitle: false,
@@ -41,7 +47,8 @@ class AppTheme {
       ),
       cardTheme: CardThemeData(
         color: AppColors.surface,
-        elevation: 0,
+        elevation: 1,
+        shadowColor: const Color(0x140F1D28),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
           side: const BorderSide(color: AppColors.border, width: 1),
@@ -49,7 +56,7 @@ class AppTheme {
         margin: EdgeInsets.zero,
       ),
       dialogTheme: DialogThemeData(
-        backgroundColor: AppColors.surface,
+        backgroundColor: Colors.white,
         surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14),
@@ -67,7 +74,7 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.surfaceVariant,
+        fillColor: Colors.white,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -110,7 +117,7 @@ class AppTheme {
           backgroundColor: AppColors.primaryAction,
           foregroundColor: Colors.white,
           elevation: 0,
-          minimumSize: const Size(0, 46),
+          minimumSize: const Size(0, 44),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
@@ -125,7 +132,8 @@ class AppTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.textPrimary,
-          minimumSize: const Size(0, 46),
+          backgroundColor: Colors.white,
+          minimumSize: const Size(0, 44),
           side: const BorderSide(color: AppColors.border),
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
           shape: RoundedRectangleBorder(
@@ -139,7 +147,7 @@ class AppTheme {
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: AppColors.primaryActionHover,
+          foregroundColor: AppColors.primaryAction,
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
@@ -151,23 +159,23 @@ class AppTheme {
         ),
       ),
       navigationRailTheme: const NavigationRailThemeData(
-        backgroundColor: AppColors.surface,
-        selectedIconTheme: IconThemeData(color: AppColors.primaryAction),
-        unselectedIconTheme: IconThemeData(color: AppColors.textSecondary),
+        backgroundColor: AppColors.deepNavy,
+        selectedIconTheme: IconThemeData(color: Colors.white),
+        unselectedIconTheme: IconThemeData(color: AppColors.textLightSecondary),
         selectedLabelTextStyle: TextStyle(
-          color: AppColors.textPrimary,
+          color: Colors.white,
           fontWeight: FontWeight.w700,
           fontSize: 13,
         ),
         unselectedLabelTextStyle: TextStyle(
-          color: AppColors.textSecondary,
+          color: AppColors.textLightSecondary,
           fontWeight: FontWeight.w500,
           fontSize: 13,
         ),
-        indicatorColor: AppColors.surfaceHighlight,
+        indicatorColor: AppColors.steelBlue,
       ),
       drawerTheme: const DrawerThemeData(
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.deepNavy,
       ),
       dataTableTheme: DataTableThemeData(
         headingRowColor: WidgetStateProperty.all(AppColors.surfaceVariant),
@@ -195,22 +203,21 @@ class AppTheme {
           if (states.contains(WidgetState.selected)) {
             return AppColors.primaryAction;
           }
-          return Colors.transparent;
+          return Colors.white;
         }),
         side: const BorderSide(color: AppColors.borderStrong, width: 1.5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       ),
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: AppColors.surfaceHighlight,
-        contentTextStyle: const TextStyle(color: AppColors.textPrimary),
+        backgroundColor: AppColors.deepNavy,
+        contentTextStyle: const TextStyle(color: Colors.white),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
-          side: const BorderSide(color: AppColors.border),
         ),
       ),
       tabBarTheme: const TabBarThemeData(
-        labelColor: AppColors.primaryActionHover,
+        labelColor: AppColors.primaryAction,
         unselectedLabelColor: AppColors.textSecondary,
         indicatorColor: AppColors.primaryAction,
         indicatorSize: TabBarIndicatorSize.tab,

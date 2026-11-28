@@ -785,19 +785,30 @@ class _VehicleListScreenState extends State<VehicleListScreen> {
                   // 3. Type
                   DataCell(
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: AppColors.background,
-                        borderRadius: BorderRadius.circular(4),
+                        color: AppColors.surfaceVariant,
+                        borderRadius: BorderRadius.circular(6),
                         border: Border.all(color: AppColors.border),
                       ),
-                      child: Text(
-                        v.type.label,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textSecondary,
-                        ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            _getVehicleTypeIcon(v.type),
+                            size: 14,
+                            color: AppColors.primaryAction,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            v.type.label,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -1070,5 +1081,22 @@ class _VehicleListScreenState extends State<VehicleListScreen> {
         );
       }).toList(),
     );
+  }
+
+  IconData _getVehicleTypeIcon(VehicleType type) {
+    switch (type) {
+      case VehicleType.truck:
+        return Icons.local_shipping;
+      case VehicleType.heavyHauler:
+        return Icons.fire_truck;
+      case VehicleType.van:
+        return Icons.airport_shuttle;
+      case VehicleType.sedan:
+        return Icons.directions_car;
+      case VehicleType.suv:
+        return Icons.directions_car_filled;
+      case VehicleType.electric:
+        return Icons.electric_car;
+    }
   }
 }

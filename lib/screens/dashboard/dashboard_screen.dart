@@ -5,7 +5,7 @@ import '../../theme/app_colors.dart';
 import '../../widgets/metric_card.dart';
 import '../../widgets/responsive_builder.dart';
 
-/// Executive fleet operations dashboard with KPI summary and compliance alerts.
+/// Executive fleet operations dashboard with floating KPI summary and compliance alerts.
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -55,74 +55,156 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Fleet Overview',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: AppColors.textPrimary, letterSpacing: -0.4)),
-                    SizedBox(height: 4),
-                    Text('Executive summary of fleet operations and compliance.',
-                      style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
-                  ],
-                ),
-                IconButton(
-                  tooltip: 'Refresh',
-                  icon: const Icon(Icons.refresh, size: 20),
-                  onPressed: () => _dashboardService.loadDashboard(),
-                ),
-              ],
+            // Layered Header Section
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.border),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x080F1D28),
+                    offset: Offset(0, 2),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.speed, size: 22, color: AppColors.primaryAction),
+                          SizedBox(width: 8),
+                          Text('Fleet Telemetry & Status',
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: AppColors.textPrimary, letterSpacing: -0.4)),
+                        ],
+                      ),
+                      SizedBox(height: 4),
+                      Text('Live operations, compliance tracking, and asset maintenance across all regional hubs.',
+                        style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+                    ],
+                  ),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.deepNavy,
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () => _dashboardService.loadDashboard(),
+                    icon: const Icon(Icons.refresh, size: 16),
+                    label: const Text('Refresh'),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 22),
 
-            // Vehicle KPI row
-            _buildSection('Fleet Status', Icons.local_shipping_outlined),
+            // Vehicle KPI row - with automotive icons (car, check, wrench, route)
+            _buildSection('Fleet Status & Assets', Icons.local_shipping_outlined),
             const SizedBox(height: 12),
             _buildKpiRow(isMobile, [
-              MetricCard(title: 'Total Vehicles', value: '${summary.vehicles.totalVehicles}',
-                icon: Icons.directions_car, accentColor: AppColors.primary, subtitle: 'Registered fleet'),
-              MetricCard(title: 'Active', value: '${summary.vehicles.activeVehicles}',
-                icon: Icons.check_circle_outline, accentColor: AppColors.statusActiveText, subtitle: 'Operational'),
-              MetricCard(title: 'Maintenance', value: '${summary.vehicles.maintenanceVehicles}',
-                icon: Icons.build_circle_outlined, accentColor: AppColors.statusMaintenanceText, subtitle: 'In workshop'),
-              MetricCard(title: 'Inactive', value: '${summary.vehicles.inactiveVehicles}',
-                icon: Icons.pause_circle_outline, accentColor: AppColors.statusInactiveText, subtitle: 'Idle'),
+              MetricCard(
+                title: 'Total Vehicles',
+                value: '${summary.vehicles.totalVehicles}',
+                icon: Icons.directions_car,
+                accentColor: AppColors.primaryAction,
+                subtitle: 'Registered fleet units',
+              ),
+              MetricCard(
+                title: 'Active Operations',
+                value: '${summary.vehicles.activeVehicles}',
+                icon: Icons.alt_route,
+                accentColor: AppColors.statusActiveText,
+                subtitle: 'Ready & on-route',
+              ),
+              MetricCard(
+                title: 'In Maintenance',
+                value: '${summary.vehicles.maintenanceVehicles}',
+                icon: Icons.build_circle_outlined,
+                accentColor: AppColors.statusMaintenanceText,
+                subtitle: 'In workshop service',
+              ),
+              MetricCard(
+                title: 'Inactive / Idle',
+                value: '${summary.vehicles.inactiveVehicles}',
+                icon: Icons.pause_circle_outline,
+                accentColor: AppColors.statusInactiveText,
+                subtitle: 'Depot reserves',
+              ),
             ]),
             const SizedBox(height: 24),
 
-            // Document and Maintenance summary row
+            // Document and Maintenance summary row - with fuel, wrench, shield
             _buildSection('Compliance & Maintenance', Icons.shield_outlined),
             const SizedBox(height: 12),
             _buildKpiRow(isMobile, [
-              MetricCard(title: 'Documents', value: '${summary.documents.totalDocuments}',
-                icon: Icons.description_outlined, accentColor: AppColors.primary, subtitle: 'Total uploaded'),
-              MetricCard(title: 'Expired', value: '${summary.documents.expiredDocuments}',
-                icon: Icons.warning_amber_rounded, accentColor: AppColors.error,
-                subtitle: 'Requires action'),
-              MetricCard(title: 'Expiring Soon', value: '${summary.documents.expiringSoonDocuments}',
-                icon: Icons.schedule, accentColor: AppColors.statusMaintenanceText,
-                subtitle: 'Within 30 days'),
-              MetricCard(title: 'Service Records', value: '${summary.maintenance.totalRecords}',
-                icon: Icons.build_outlined, accentColor: AppColors.secondary,
-                subtitle: 'BDT ${summary.maintenance.totalCost.toStringAsFixed(0)} total'),
+              MetricCard(
+                title: 'Compliance Documents',
+                value: '${summary.documents.totalDocuments}',
+                icon: Icons.description_outlined,
+                accentColor: AppColors.deepNavy,
+                subtitle: 'Regulatory files',
+              ),
+              MetricCard(
+                title: 'Expired Documents',
+                value: '${summary.documents.expiredDocuments}',
+                icon: Icons.warning_amber_rounded,
+                accentColor: AppColors.error,
+                subtitle: 'Immediate renewal required',
+              ),
+              MetricCard(
+                title: 'Expiring in 30 Days',
+                value: '${summary.documents.expiringSoonDocuments}',
+                icon: Icons.schedule,
+                accentColor: AppColors.statusMaintenanceText,
+                subtitle: 'Upcoming renewals',
+              ),
+              MetricCard(
+                title: 'Service Records',
+                value: '${summary.maintenance.totalRecords}',
+                icon: Icons.build_outlined,
+                accentColor: AppColors.steelBlue,
+                subtitle: 'BDT ${summary.maintenance.totalCost.toStringAsFixed(0)} logged',
+              ),
             ]),
             const SizedBox(height: 24),
 
-            // Driver summary row
-            _buildSection('Driver Summary', Icons.people_outline),
+            // Driver summary row - with driver badge, person icons
+            _buildSection('Driver Personnel', Icons.badge_outlined),
             const SizedBox(height: 12),
             _buildKpiRow(isMobile, [
-              MetricCard(title: 'Total Drivers', value: '${summary.drivers.totalDrivers}',
-                icon: Icons.person, accentColor: AppColors.primary, subtitle: 'Registered drivers'),
-              MetricCard(title: 'Active', value: '${summary.drivers.activeDrivers}',
-                icon: Icons.person_pin, accentColor: AppColors.statusActiveText, subtitle: 'Available'),
-              MetricCard(title: 'Inactive', value: '${summary.drivers.inactiveDrivers}',
-                icon: Icons.person_off, accentColor: AppColors.statusInactiveText, subtitle: 'Unavailable'),
-              MetricCard(title: 'Recent Services', value: '${summary.maintenance.recentRecordsLast30Days}',
-                icon: Icons.event_note, accentColor: AppColors.secondaryAccent, subtitle: 'Last 30 days'),
+              MetricCard(
+                title: 'Total Drivers',
+                value: '${summary.drivers.totalDrivers}',
+                icon: Icons.person_outline,
+                accentColor: AppColors.deepNavy,
+                subtitle: 'Licensed drivers',
+              ),
+              MetricCard(
+                title: 'Active Assigned',
+                value: '${summary.drivers.activeDrivers}',
+                icon: Icons.verified_outlined,
+                accentColor: AppColors.statusActiveText,
+                subtitle: 'Assigned to routes',
+              ),
+              MetricCard(
+                title: 'Available / Unassigned',
+                value: '${summary.drivers.inactiveDrivers}',
+                icon: Icons.person_off_outlined,
+                accentColor: AppColors.statusInactiveText,
+                subtitle: 'Standby personnel',
+              ),
+              MetricCard(
+                title: 'Services (Last 30d)',
+                value: '${summary.maintenance.recentRecordsLast30Days}',
+                icon: Icons.car_repair_outlined,
+                accentColor: AppColors.primaryAction,
+                subtitle: 'Routine maintenance',
+              ),
             ]),
             const SizedBox(height: 24),
 
@@ -158,14 +240,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildExpiryAlertsTable(List<VehicleDocumentExpiry> alerts) {
-    return Card(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.border),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x0A0F1D28),
+            offset: Offset(0, 2),
+            blurRadius: 6,
+          ),
+        ],
+      ),
       clipBehavior: Clip.antiAlias,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: DataTable(
-          headingRowHeight: 44,
-          dataRowMinHeight: 48,
-          dataRowMaxHeight: 56,
+          headingRowHeight: 46,
+          dataRowMinHeight: 50,
+          dataRowMaxHeight: 58,
           columns: const [
             DataColumn(label: Text('VEHICLE')),
             DataColumn(label: Text('DOCUMENT TYPE')),
@@ -176,7 +270,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           rows: alerts.take(10).map((alert) {
             final isExpired = alert.expiryStatus == DocumentExpiryStatus.expired;
             return DataRow(cells: [
-              DataCell(Text(alert.vehicleNumber, style: const TextStyle(fontWeight: FontWeight.w700, fontFamily: 'monospace'))),
+              DataCell(Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.directions_car, size: 16, color: AppColors.textSecondary),
+                  const SizedBox(width: 6),
+                  Text(alert.vehicleNumber, style: const TextStyle(fontWeight: FontWeight.w700, fontFamily: 'monospace')),
+                ],
+              )),
               DataCell(Text(alert.documentTypeLabel ?? alert.documentType.label)),
               DataCell(Text(alert.expiryDate != null
                   ? '${alert.expiryDate!.year}-${alert.expiryDate!.month.toString().padLeft(2, '0')}-${alert.expiryDate!.day.toString().padLeft(2, '0')}'
@@ -214,19 +315,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget _buildErrorState(String message) {
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.cloud_off_outlined, size: 48, color: AppColors.error),
-          const SizedBox(height: 16),
-          Text(message, style: const TextStyle(color: AppColors.textSecondary), textAlign: TextAlign.center),
-          const SizedBox(height: 16),
-          ElevatedButton.icon(
-            onPressed: () => _dashboardService.loadDashboard(),
-            icon: const Icon(Icons.refresh, size: 16),
-            label: const Text('Retry'),
-          ),
-        ],
+      child: Container(
+        margin: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(32),
+        constraints: const BoxConstraints(maxWidth: 480),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.border),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.cloud_off_outlined, size: 48, color: AppColors.error),
+            const SizedBox(height: 16),
+            Text(message, style: const TextStyle(color: AppColors.textSecondary), textAlign: TextAlign.center),
+            const SizedBox(height: 16),
+            ElevatedButton.icon(
+              onPressed: () => _dashboardService.loadDashboard(),
+              icon: const Icon(Icons.refresh, size: 16),
+              label: const Text('Retry'),
+            ),
+          ],
+        ),
       ),
     );
   }

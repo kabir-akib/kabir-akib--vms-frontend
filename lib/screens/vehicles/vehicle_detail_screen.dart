@@ -125,6 +125,16 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> with SingleTi
                 Row(
                   children: [
                     Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: AppColors.surfaceVariant,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: AppColors.border),
+                      ),
+                      child: Icon(_getVehicleTypeIcon(v.type), color: AppColors.primaryAction, size: 22),
+                    ),
+                    const SizedBox(width: 12),
+                    Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(color: AppColors.surfaceVariant, borderRadius: BorderRadius.circular(6),
                         border: Border.all(color: AppColors.borderStrong, width: 1.2)),
@@ -616,5 +626,22 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> with SingleTi
 
   String _formatDateTime(DateTime date) {
     return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+  }
+
+  IconData _getVehicleTypeIcon(VehicleType type) {
+    switch (type) {
+      case VehicleType.truck:
+        return Icons.local_shipping;
+      case VehicleType.heavyHauler:
+        return Icons.fire_truck;
+      case VehicleType.van:
+        return Icons.airport_shuttle;
+      case VehicleType.sedan:
+        return Icons.directions_car;
+      case VehicleType.suv:
+        return Icons.directions_car_filled;
+      case VehicleType.electric:
+        return Icons.electric_car;
+    }
   }
 }
