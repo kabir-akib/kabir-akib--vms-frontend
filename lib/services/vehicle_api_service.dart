@@ -67,6 +67,15 @@ class VehicleApiService {
     return Vehicle.fromJson(data as Map<String, dynamic>);
   }
 
+  /// Updates vehicle operational status: `PATCH /api/v1/vehicles/{id}/status`
+  Future<Vehicle> updateVehicleStatus(String id, VehicleStatus status) async {
+    final data = await _client.patch(
+      '${AppConfig.vehiclesEndpoint}/$id/status',
+      body: {'status': status.apiValue},
+    );
+    return Vehicle.fromJson(data as Map<String, dynamic>);
+  }
+
   /// Removes a vehicle by ID: `DELETE /api/v1/vehicles/{id}`
   Future<void> deleteVehicle(String id) async {
     await _client.delete('${AppConfig.vehiclesEndpoint}/$id');

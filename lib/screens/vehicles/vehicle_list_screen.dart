@@ -835,6 +835,28 @@ class _VehicleListScreenState extends State<VehicleListScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Tooltip(
+                          message: 'View Details',
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              minimumSize: const Size(36, 36),
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              side: const BorderSide(color: AppColors.borderStrong),
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(context, AppRoutes.vehicleDetail, arguments: v.id);
+                            },
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.visibility_outlined, size: 15),
+                                SizedBox(width: 4),
+                                Text('View', style: TextStyle(fontSize: 12)),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        Tooltip(
                           message: 'Edit Vehicle',
                           child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
@@ -862,7 +884,7 @@ class _VehicleListScreenState extends State<VehicleListScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(width: 6),
                         Tooltip(
                           message: 'Delete Vehicle',
                           child: OutlinedButton(
@@ -1002,6 +1024,18 @@ class _VehicleListScreenState extends State<VehicleListScreen> {
                           minimumSize: const Size(0, 36),
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                         ),
+                        icon: const Icon(Icons.visibility_outlined, size: 16),
+                        label: const Text('View', style: TextStyle(fontSize: 13)),
+                        onPressed: () {
+                          Navigator.pushNamed(context, AppRoutes.vehicleDetail, arguments: v.id);
+                        },
+                      ),
+                      const SizedBox(width: 8),
+                      OutlinedButton.icon(
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: const Size(0, 36),
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                        ),
                         icon: const Icon(Icons.edit_outlined, size: 16),
                         label: const Text('Edit', style: TextStyle(fontSize: 13)),
                         onPressed: () async {
@@ -1015,7 +1049,7 @@ class _VehicleListScreenState extends State<VehicleListScreen> {
                           }
                         },
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 8),
                       OutlinedButton.icon(
                         style: OutlinedButton.styleFrom(
                           minimumSize: const Size(0, 36),

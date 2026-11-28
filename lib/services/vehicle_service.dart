@@ -128,6 +128,30 @@ class VehicleService extends ChangeNotifier {
     return updated;
   }
 
+  /// Updates vehicle operational status through Spring Boot `PATCH /api/v1/vehicles/{id}/status`.
+  Future<Vehicle> updateVehicleStatus(String id, VehicleStatus status) async {
+    final updated = await _apiService.updateVehicleStatus(id, status);
+    final index = _vehicles.indexWhere((v) => v.id == id);
+    if (index != -1) {
+      _vehicles[index] = updated;
+      _metrics = FleetMetrics.fromVehicles(_vehicles);
+      notifyListeners();
+    } else {
+      await loadVehicles(showLoading: false);
+    }
+    return updated;
+  }
+
+  /// Fetches a vehicle by ID.
+  Future<Vehicle> getVehicleById(String id) async {
+    final cached = _vehicles.cast<Vehicle?>().firstWhere(
+          (v) => v?.id == id,
+          orElse: () => null,
+        );
+    if (cached != null) return cached;
+    return await _apiService.getVehicleById(id);
+  }
+
   /// Deletes a vehicle by ID through Spring Boot `DELETE /api/v1/vehicles/{id}`.
   ///
   /// Only removes the vehicle from local state after backend deletion succeeds.

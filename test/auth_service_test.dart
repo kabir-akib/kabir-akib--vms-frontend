@@ -250,6 +250,27 @@ void main() {
   });
 
   group('LoginScreen Widget Integration', () {
+    testWidgets('email and password fields are empty by default',
+        (WidgetTester tester) async {
+      final apiClient = ApiClient(baseUrl: 'http://localhost:8080');
+      final authService = AuthService.forTest(
+        apiClient: apiClient,
+        tokenStorage: InMemoryTokenStorage(),
+      );
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: LoginScreen(authService: authService),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final fields = find.byType(TextFormField);
+      expect(fields, findsNWidgets(2));
+      expect(tester.widget<TextFormField>(fields.at(0)).controller?.text, isEmpty);
+      expect(tester.widget<TextFormField>(fields.at(1)).controller?.text, isEmpty);
+    });
+
     testWidgets('shows user-friendly error message when backend returns 401',
         (WidgetTester tester) async {
       final mockHttp = MockClient((request) async {
@@ -277,6 +298,22 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      await tester.enterText(
+        find.byType(TextFormField).at(0),
+        'admin@starkgroup.com',
+      );
+      await tester.enterText(
+        find.byType(TextFormField).at(1),
+        'wrong-password',
+      );
+      await tester.enterText(
+        find.byType(TextFormField).at(0),
+        'admin@starkgroup.com',
+      );
+      await tester.enterText(
+        find.byType(TextFormField).at(1),
+        'stark2026',
+      );
       await tester.tap(find.text('Sign In to Fleet Portal'));
       await tester.pumpAndSettle();
 
@@ -327,6 +364,22 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      await tester.enterText(
+        find.byType(TextFormField).at(0),
+        'admin@starkgroup.com',
+      );
+      await tester.enterText(
+        find.byType(TextFormField).at(1),
+        'wrong-password',
+      );
+      await tester.enterText(
+        find.byType(TextFormField).at(0),
+        'admin@starkgroup.com',
+      );
+      await tester.enterText(
+        find.byType(TextFormField).at(1),
+        'stark2026',
+      );
       await tester.tap(find.text('Sign In to Fleet Portal'));
       await tester.pumpAndSettle();
 

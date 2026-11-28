@@ -40,10 +40,12 @@ class ApiClient {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
     };
+
     final token = authToken;
     if (token != null && token.isNotEmpty) {
       headers['Authorization'] = 'Bearer $token';
     }
+
     return headers;
   }
 
@@ -157,6 +159,38 @@ class ApiClient {
     }
   }
 
+  /// Performs an HTTP PATCH request with a JSON body.
+  Future<dynamic> patch(String path, {Map<String, dynamic>? body}) async {
+    final uri = _buildUri(path);
+    try {
+      final response = await _client
+          .patch(
+            uri,
+            headers: _headers,
+            body: body != null ? jsonEncode(body) : null,
+          )
+          .timeout(AppConfig.requestTimeout);
+      return _handleResponse(response, uri.path);
+    } on TimeoutException {
+      throw ApiException(
+        message: 'Request timed out while contacting server at $_baseUrl.',
+        path: uri.path,
+      );
+    } on http.ClientException catch (e) {
+      throw ApiException(
+        message: 'Network error: Unable to reach backend at $_baseUrl. '
+            'Please verify the Spring Boot server is running. (${e.message})',
+        path: uri.path,
+      );
+    } catch (e) {
+      if (e is ApiException) rethrow;
+      throw ApiException(
+        message: 'Failed to communicate with backend: $e',
+        path: uri.path,
+      );
+    }
+  }
+
   /// Performs an HTTP DELETE request.
   Future<dynamic> delete(String path) async {
     final uri = _buildUri(path);
@@ -185,6 +219,54 @@ class ApiClient {
     }
   }
 
+  /// Performs a multipart form upload for files (e.g. documents).
+  Future<dynamic> uploadMultipart(
+    String path, {
+    required Map<String, String> fields,
+    required List<int> fileBytes,
+    required String filename,
+    String fileField = 'file',
+  }) async {
+    final uri = _buildUri(path);
+    try {
+      final request = http.MultipartRequest('POST', uri);
+      final token = authToken;
+      if (token != null && token.isNotEmpty) {
+        request.headers['Authorization'] = 'Bearer $token';
+      }
+      request.headers['Accept'] = 'application/json';
+      request.fields.addAll(fields);
+      request.files.add(
+        http.MultipartFile.fromBytes(
+          fileField,
+          fileBytes,
+          filename: filename,
+        ),
+      );
+
+      final streamedResponse =
+          await request.send().timeout(AppConfig.requestTimeout);
+      final response = await http.Response.fromStream(streamedResponse);
+      return _handleResponse(response, uri.path);
+    } on TimeoutException {
+      throw ApiException(
+        message: 'Request timed out while uploading document to $_baseUrl.',
+        path: uri.path,
+      );
+    } on http.ClientException catch (e) {
+      throw ApiException(
+        message: 'Network error during upload to $_baseUrl: (${e.message})',
+        path: uri.path,
+      );
+    } catch (e) {
+      if (e is ApiException) rethrow;
+      throw ApiException(
+        message: 'Failed to upload document: $e',
+        path: uri.path,
+      );
+    }
+  }
+
   /// Handles Spring Boot [ApiResponse<T>] and [ErrorResponse] payloads.
   dynamic _handleResponse(http.Response response, String path) {
     dynamic decoded;
@@ -199,7 +281,6 @@ class ApiClient {
     // Successful responses: 200 OK, 201 Created, 204 No Content
     if (statusCode >= 200 && statusCode < 300) {
       if (decoded is Map<String, dynamic>) {
-        // Unwraps Spring Boot ApiResponse envelope: { success: true, message: "...", data: ... }
         if (decoded.containsKey('data')) {
           return decoded['data'];
         }
@@ -214,7 +295,6 @@ class ApiClient {
     Map<String, String>? fieldErrors;
 
     if (decoded is Map<String, dynamic>) {
-      // Check for ErrorResponse fields: { status, error, message, path, fieldErrors }
       if (decoded['message'] != null && decoded['message'].toString().isNotEmpty) {
         errorMessage = decoded['message'].toString();
       }
@@ -243,4 +323,3 @@ class ApiClient {
     );
   }
 }
-
