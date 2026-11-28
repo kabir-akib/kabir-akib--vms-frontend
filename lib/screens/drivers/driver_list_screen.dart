@@ -44,7 +44,7 @@ class _DriverListScreenState extends State<DriverListScreen> {
               if (_driverService.isLoading)
                 const Center(child: Padding(
                   padding: EdgeInsets.all(40),
-                  child: CircularProgressIndicator(color: AppColors.starkOrange, strokeWidth: 3)))
+                  child: CircularProgressIndicator(color: AppColors.primaryAction, strokeWidth: 3)))
               else if (_driverService.hasError)
                 _buildError(_driverService.errorMessage!)
               else ...[
@@ -81,7 +81,7 @@ class _DriverListScreenState extends State<DriverListScreen> {
               onPressed: () => _driverService.loadDrivers()),
             const SizedBox(width: 8),
             ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(backgroundColor: AppColors.starkOrange, foregroundColor: Colors.white),
+              style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryAction, foregroundColor: Colors.white),
               onPressed: () => _showDriverDialog(null),
               icon: const Icon(Icons.person_add, size: 18),
               label: const Text('Add Driver'),
@@ -106,7 +106,7 @@ class _DriverListScreenState extends State<DriverListScreen> {
               const Text('No Drivers Registered', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
               const SizedBox(height: 8),
               ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(backgroundColor: AppColors.starkOrange, foregroundColor: Colors.white),
+                style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryAction, foregroundColor: Colors.white),
                 onPressed: () => _showDriverDialog(null),
                 icon: const Icon(Icons.person_add, size: 16),
                 label: const Text('Add First Driver'),
@@ -341,7 +341,7 @@ class _DriverListScreenState extends State<DriverListScreen> {
           actions: [
             OutlinedButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: AppColors.starkOrange, foregroundColor: Colors.white),
+              style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryAction, foregroundColor: Colors.white),
               onPressed: submitting ? null : () async {
                 if (!formKey.currentState!.validate()) return;
                 setDialogState(() => submitting = true);
@@ -466,7 +466,7 @@ class _DriverListScreenState extends State<DriverListScreen> {
           actions: [
             OutlinedButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: AppColors.starkOrange, foregroundColor: Colors.white),
+              style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryAction, foregroundColor: Colors.white),
               onPressed: submitting ? null : () async {
                 if (!formKey.currentState!.validate()) return;
                 setDialogState(() => submitting = true);

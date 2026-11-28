@@ -17,6 +17,9 @@ class AppConfig {
   static const String logoutEndpoint = '/api/v1/auth/logout';
   static const String meEndpoint = '/api/v1/auth/me';
 
+  /// User management endpoints
+  static const String usersEndpoint = '/api/v1/users';
+
   /// Dashboard endpoints
   static const String dashboardSummaryEndpoint = '/api/v1/dashboard/summary';
 

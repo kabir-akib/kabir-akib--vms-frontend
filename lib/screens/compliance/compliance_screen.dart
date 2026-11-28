@@ -37,7 +37,7 @@ class _ComplianceScreenState extends State<ComplianceScreen> {
               if (_documentService.isLoading)
                 const Center(child: Padding(
                   padding: EdgeInsets.all(40),
-                  child: CircularProgressIndicator(color: AppColors.starkOrange, strokeWidth: 3)))
+                  child: CircularProgressIndicator(color: AppColors.primaryAction, strokeWidth: 3)))
               else if (_documentService.errorMessage != null)
                 _buildError(_documentService.errorMessage!)
               else

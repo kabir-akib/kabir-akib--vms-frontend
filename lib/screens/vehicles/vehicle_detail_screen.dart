@@ -79,9 +79,9 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> with SingleTi
         bottom: _vehicle != null ? TabBar(
           controller: _tabController,
           isScrollable: true,
-          labelColor: AppColors.starkOrange,
+          labelColor: AppColors.primaryActionHover,
           unselectedLabelColor: AppColors.textSecondary,
-          indicatorColor: AppColors.starkOrange,
+          indicatorColor: AppColors.primaryAction,
           tabs: const [
             Tab(text: 'Specifications'),
             Tab(text: 'Documents'),
@@ -91,7 +91,7 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> with SingleTi
         ) : null,
       ),
       body: _isLoading
-        ? const Center(child: CircularProgressIndicator(color: AppColors.starkOrange, strokeWidth: 3))
+        ? const Center(child: CircularProgressIndicator(color: AppColors.primaryAction, strokeWidth: 3))
         : _error != null
           ? Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
               const Icon(Icons.error_outline, size: 48, color: AppColors.error),
@@ -175,7 +175,7 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> with SingleTi
             children: [
               Text('Documents (${_documents.length})', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
               ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(backgroundColor: AppColors.starkOrange, foregroundColor: Colors.white),
+                style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryAction, foregroundColor: Colors.white),
                 onPressed: _showUploadDialog,
                 icon: const Icon(Icons.upload_file, size: 18),
                 label: const Text('Upload Document'),
@@ -276,7 +276,7 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> with SingleTi
           actions: [
             OutlinedButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: AppColors.starkOrange, foregroundColor: Colors.white),
+              style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryAction, foregroundColor: Colors.white),
               onPressed: (uploading || selectedFile == null || selectedFile!.bytes == null) ? null : () async {
                 setDialogState(() => uploading = true);
                 try {
@@ -348,7 +348,7 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> with SingleTi
             children: [
               Text('Maintenance History (${_maintenanceRecords.length})', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
               ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(backgroundColor: AppColors.starkOrange, foregroundColor: Colors.white),
+                style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryAction, foregroundColor: Colors.white),
                 onPressed: () => _showMaintenanceDialog(null),
                 icon: const Icon(Icons.add, size: 18),
                 label: const Text('Log Service'),
@@ -400,7 +400,7 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> with SingleTi
                 padding: const EdgeInsets.all(16),
                 child: Row(
                   children: [
-                    const Icon(Icons.attach_money, size: 20, color: AppColors.starkOrange),
+                    const Icon(Icons.attach_money, size: 20, color: AppColors.statusActiveText),
                     const SizedBox(width: 8),
                     Text('Total Maintenance Cost: BDT ${_maintenanceRecords.fold<double>(0, (sum, m) => sum + m.cost).toStringAsFixed(2)}',
                       style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
@@ -477,7 +477,7 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> with SingleTi
           actions: [
             OutlinedButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: AppColors.starkOrange, foregroundColor: Colors.white),
+              style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryAction, foregroundColor: Colors.white),
               onPressed: submitting ? null : () async {
                 if (!formKey.currentState!.validate()) return;
                 setDialogState(() => submitting = true);

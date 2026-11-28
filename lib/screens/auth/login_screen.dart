@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: AppColors.starkOrange,
+                              color: AppColors.primaryAction,
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Icon(
@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
-                                        color: AppColors.starkOrange,
+                                        color: AppColors.primaryAction,
                                       ),
                                     ),
                                   ],
@@ -253,7 +253,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: 24,
                             child: Checkbox(
                               value: _rememberMe,
-                              activeColor: AppColors.starkOrange,
+                              activeColor: AppColors.primaryAction,
                               onChanged: (val) {
                                 setState(() => _rememberMe = val ?? false);
                               },
@@ -310,7 +310,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       // Sign In Button
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.starkOrange,
+                          backgroundColor: AppColors.primaryAction,
                           foregroundColor: Colors.white,
                         ),
                         onPressed: _isLoading ? null : _handleLogin,
@@ -327,7 +327,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 18),
 
-                      // Demo Notice
+                      // Notice
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
@@ -337,12 +337,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         child: const Row(
                           children: [
-                            Icon(Icons.info_outline,
-                                size: 18, color: AppColors.starkOrange),
+                            Icon(Icons.shield_outlined,
+                                size: 18, color: AppColors.primaryAction),
                             SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                'Demo Mode: Pre-filled credentials loaded. Click "Sign In" to proceed.',
+                                'Authorized personnel only. Sessions are monitored and encrypted.',
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: AppColors.textSecondary,

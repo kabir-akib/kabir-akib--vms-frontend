@@ -31,7 +31,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       builder: (context, _) {
         if (_dashboardService.isLoading) {
           return const Center(
-            child: CircularProgressIndicator(color: AppColors.starkOrange, strokeWidth: 3),
+            child: CircularProgressIndicator(color: AppColors.primaryAction, strokeWidth: 3),
           );
         }
 
@@ -122,7 +122,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               MetricCard(title: 'Inactive', value: '${summary.drivers.inactiveDrivers}',
                 icon: Icons.person_off, accentColor: AppColors.statusInactiveText, subtitle: 'Unavailable'),
               MetricCard(title: 'Recent Services', value: '${summary.maintenance.recentRecordsLast30Days}',
-                icon: Icons.event_note, accentColor: AppColors.starkOrange, subtitle: 'Last 30 days'),
+                icon: Icons.event_note, accentColor: AppColors.secondaryAccent, subtitle: 'Last 30 days'),
             ]),
             const SizedBox(height: 24),
 

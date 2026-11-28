@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/vehicle.dart';
 import '../screens/auth/login_screen.dart';
+import '../screens/users/user_management_screen.dart';
 import '../screens/shell/app_shell.dart';
 import '../screens/vehicles/vehicle_detail_screen.dart';
 import '../screens/vehicles/vehicle_form_screen.dart';
@@ -13,6 +14,7 @@ class AppRoutes {
   static const String vehicleNew = '/vehicles/new';
   static const String vehicleEdit = '/vehicles/edit';
   static const String vehicleDetail = '/vehicles/detail';
+  static const String userManagement = '/users';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     final isAuthenticated = AuthService().isAuthenticated;
@@ -53,6 +55,15 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => isAuthenticated && vehicleId != null
               ? VehicleDetailScreen(vehicleId: vehicleId)
+              : const LoginScreen(),
+          settings: settings,
+        );
+
+      case userManagement:
+        final isAdmin = AuthService().currentUser?.role == 'ADMIN';
+        return MaterialPageRoute(
+          builder: (_) => isAuthenticated && isAdmin
+              ? const UserManagementScreen()
               : const LoginScreen(),
           settings: settings,
         );

@@ -266,16 +266,16 @@ class _VehicleListScreenState extends State<VehicleListScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
-                      color: AppColors.starkOrangeSoft,
+                      color: AppColors.primaryAction.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: AppColors.starkOrange.withValues(alpha: 0.3)),
+                      border: Border.all(color: AppColors.primaryAction.withValues(alpha: 0.3)),
                     ),
                     child: Text(
                       '${_vehicleService.totalVehicles} Registered',
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.starkOrange,
+                        color: AppColors.primaryActionHover,
                       ),
                     ),
                   ),
@@ -304,7 +304,7 @@ class _VehicleListScreenState extends State<VehicleListScreen> {
             const SizedBox(width: 8),
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.starkOrange,
+                backgroundColor: AppColors.primaryAction,
                 foregroundColor: Colors.white,
               ),
               onPressed: () async {
@@ -530,7 +530,7 @@ class _VehicleListScreenState extends State<VehicleListScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const CircularProgressIndicator(
-              color: AppColors.starkOrange,
+              color: AppColors.primaryAction,
               strokeWidth: 3,
             ),
             const SizedBox(height: 20),
@@ -689,7 +689,7 @@ class _VehicleListScreenState extends State<VehicleListScreen> {
                   const SizedBox(width: 12),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.starkOrange,
+                      backgroundColor: AppColors.primaryAction,
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () async {

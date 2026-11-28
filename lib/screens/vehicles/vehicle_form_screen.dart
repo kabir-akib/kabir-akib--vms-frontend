@@ -115,7 +115,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Vehicle $vehicleNumber registered successfully.'),
-            backgroundColor: AppColors.starkOrange,
+            backgroundColor: AppColors.statusActiveText,
           ),
         );
       }
@@ -166,7 +166,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
             padding: const EdgeInsets.only(right: 16, top: 8, bottom: 8),
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.starkOrange,
+                backgroundColor: AppColors.primaryAction,
                 foregroundColor: Colors.white,
               ),
               onPressed: _isSubmitting ? null : _saveVehicle,
@@ -276,15 +276,15 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.starkOrangeSoft,
+                color: AppColors.primaryAction.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  color: AppColors.starkOrange.withValues(alpha: 0.25),
+                  color: AppColors.primaryAction.withValues(alpha: 0.25),
                 ),
               ),
               child: const Icon(
                 Icons.directions_car,
-                color: AppColors.starkOrange,
+                color: AppColors.primaryAction,
                 size: 26,
               ),
             ),
@@ -546,7 +546,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
       children: [
         Row(
           children: [
-            Icon(icon, size: 18, color: AppColors.starkOrange),
+            Icon(icon, size: 18, color: AppColors.primaryAction),
             const SizedBox(width: 8),
             Text(
               title,
@@ -603,7 +603,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
         const SizedBox(width: 14),
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.starkOrange,
+            backgroundColor: AppColors.primaryAction,
             foregroundColor: Colors.white,
           ),
           onPressed: _isSubmitting ? null : _saveVehicle,
